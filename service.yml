@@ -4,6 +4,11 @@ type: infrastructure
 hostname: prometheus
 containers:
 - name: prometheus
+  ports:
+  - name: prometheus
+    number: 9090
+    type: http
+    main: true
 
 helm:
   name: prometheus-community
@@ -16,6 +21,9 @@ helm:
     labels: server.labels
     resources: server.resources
     env: server.env
+    ingresses: 
+    - name: prometheus
+      service: '{{service.name}}'    
   values:
   - name: prometheus-pushgateway.enabled
     value: false
