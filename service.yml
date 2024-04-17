@@ -1,0 +1,18 @@
+name: prometheus
+title: Prometheus
+type: infrastructure
+hostname: prometheus
+containers:
+- name: prometheus
+
+helm:
+  name: prometheus-community
+  source: https://prometheus-community.github.io/helm-charts
+  chart: prometheus-community/prometheus
+  version: 25.19.1
+  configurations:
+  - name: prometheus
+    annotations: server.deploymentAnnotations
+    labels: server.labels
+    resources: server.resources
+    env: server.env
