@@ -33,3 +33,33 @@ helm:
     value: false
   - name: prometheus-node-exporter.enabled
     value: false
+  - name: scrapeConfigFiles
+    value: |
+      - job_name: kube-state-metrics
+        honor_timestamps: true
+        scrape_interval: 1m
+        scrape_timeout: 1m
+        metrics_path: /metrics
+        scheme: http
+        static_configs:
+        - targets:
+          - kube-state-metrics:8080
+
+      - job_name: metrics-server
+        honor_timestamps: true
+        scrape_interval: 1m
+        scrape_timeout: 1m
+        scheme: https
+        static_configs:
+        - targets:
+          - metrics-server:443
+
+      - job_name: node-exporter
+        honor_timestamps: true
+        scrape_interval: 1m
+        scrape_timeout: 1m
+        scheme: http
+        static_configs:
+        - targets:
+          - node-exporter:9100
+
