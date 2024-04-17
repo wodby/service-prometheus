@@ -16,3 +16,8 @@ helm:
     labels: server.labels
     resources: server.resources
     env: server.env
+  values:
+  - name: prometheus-pushgateway.enabled
+    value: false
+  - name: alertmanager.enabled
+    value: false
