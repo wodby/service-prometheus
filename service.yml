@@ -16,13 +16,13 @@ helm:
   chart: prometheus-community/prometheus
   version: 25.19.1
   configurations:
-  - name: prometheus
+  - container: prometheus
     annotations: server.deploymentAnnotations
     labels: server.labels
     resources: server.resources
     env: server.env
     ingresses: 
-    - name: prometheus
+    - container: prometheus
       service: '{{service.name}}'    
   values:
   - name: prometheus-pushgateway.enabled
