@@ -1,7 +1,6 @@
 name: prometheus
 title: Prometheus
 type: infrastructure
-hostname: prometheus
 containers:
 - name: prometheus
   ports:
