@@ -1,7 +1,7 @@
 name: prometheus
 title: Prometheus
 icon: prometheus
-type: infrastructure
+type: service
 scalable: false
 labels:
 - prometheus
