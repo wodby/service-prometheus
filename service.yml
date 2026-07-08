@@ -1,7 +1,17 @@
 name: prometheus
 title: Prometheus
+icon: prometheus
 type: infrastructure
-containers:
+scalable: false
+labels:
+- prometheus
+- metrics
+options:
+- version: '3.13'
+  tag: '3.13'
+  default: true
+
+endpoints:
 - name: prometheus
   ports:
   - name: prometheus
@@ -9,56 +19,48 @@ containers:
     type: http
     main: true
 
+volumes:
+- name: data
+  title: Data
+  size: 10
+  helm:
+    labels: persistence.labels
+    values:
+    - name: persistence.enabled
+      value: true
+    - name: persistence.size
+      value: '{{volumes.data.size}}Gi'
+    - name: persistence.existingClaim
+      value: '{{volumes.data.claim}}'
+
+configs:
+- name: config
+  title: Prometheus config
+  helm: config.prometheusYml
+  processTokens: true
+  config: prometheus.yml.tmpl
+
 helm:
-  name: prometheus-community
-  source: https://prometheus-community.github.io/helm-charts
-  chart: prometheus-community/prometheus
-  version: 25.19.1
-  configurations:
-  - container: prometheus
-    annotations: server.deploymentAnnotations
-    labels: server.labels
-    resources: server.resources
-    env: server.env
-    ingresses: 
-    - container: prometheus
-      service: '{{service.name}}'    
-  values:
-  - name: prometheus-pushgateway.enabled
-    value: false
-  - name: alertmanager.enabled
-    value: false
-  - name: kube-state-metrics.enabled
-    value: false
-  - name: prometheus-node-exporter.enabled
-    value: false
-  - name: scrapeConfigFiles
-    value: |
-      - job_name: kube-state-metrics
-        honor_timestamps: true
-        scrape_interval: 1m
-        scrape_timeout: 1m
-        metrics_path: /metrics
-        scheme: http
-        static_configs:
-        - targets:
-          - kube-state-metrics:8080
+  name: wodby
+  source: oci://registry-1.docker.io/wodby/prometheus
+  chart: oci://registry-1.docker.io/wodby/prometheus
+  version: 0.1.0
 
-      - job_name: metrics-server
-        honor_timestamps: true
-        scrape_interval: 1m
-        scrape_timeout: 1m
-        scheme: https
-        static_configs:
-        - targets:
-          - metrics-server:443
-
-      - job_name: node-exporter
-        honor_timestamps: true
-        scrape_interval: 1m
-        scrape_timeout: 1m
-        scheme: http
-        static_configs:
-        - targets:
-          - node-exporter:9100
-
+workloads:
+- name: main
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: '{{helm.release}}'
+  kind: statefulset
+  primary: true
+  helm:
+    labels: podLabels
+    annotations: podAnnotations
+    volumes: extraVolumes
+  containers:
+  - name: prometheus
+    image: wodby/prometheus
+    helm:
+      resources: resources
+      env: envVars
+      mounts: extraVolumeMounts
