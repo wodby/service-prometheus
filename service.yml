@@ -17,7 +17,7 @@ endpoints:
   ports:
   - name: prometheus
     number: 9090
-    type: http
+    protocol: http
     main: true
 
 volumes:
