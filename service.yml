@@ -39,7 +39,9 @@ configs:
   title: Prometheus config
   helm: config.prometheusYml
   processTokens: true
-  config: prometheus.yml.tmpl
+  default:
+    source: image
+    filepath: /etc/gotpl/prometheus.yml.tmpl
 
 helm:
   name: wodby
