@@ -47,7 +47,7 @@ helm:
   name: wodby
   source: oci://registry-1.docker.io/wodby/prometheus
   chart: oci://registry-1.docker.io/wodby/prometheus
-  version: 0.1.0
+  version: 0.2.0
 
 workloads:
 - name: main
