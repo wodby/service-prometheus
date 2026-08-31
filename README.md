@@ -24,7 +24,7 @@ configuration for Prometheus.
 | Containers | `prometheus` using `wodby/prometheus` |
 | Endpoints | `prometheus`: HTTP 9090 (main) |
 | Volumes | Data, 10 GB |
-| Helm | chart `oci://registry-1.docker.io/wodby/prometheus`; version `0.1.0` |
+| Helm | chart `oci://registry-1.docker.io/wodby/prometheus`; version `0.2.1` |
 | Configuration | 1 configuration files |
 
 ## Use this service
