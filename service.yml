@@ -8,9 +8,8 @@ labels:
 - metrics
 options:
 - version: '3.13'
-  tag: '3.13-0.3.3'
+  tag: 3.13-r0
   default: true
-
   eol: '2027-07-31T00:00:00+00:00'
 endpoints:
 - name: prometheus
@@ -52,7 +51,7 @@ helm:
   name: wodby
   source: oci://registry-1.docker.io/wodby/prometheus
   chart: oci://registry-1.docker.io/wodby/prometheus
-  version: 0.2.1
+  version: 0.2.2
 
 workloads:
 - name: main
