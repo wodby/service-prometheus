@@ -2,6 +2,7 @@ name: prometheus
 title: Prometheus
 icon: prometheus
 type: service
+basicAuth: true
 scalable: false
 labels:
 - prometheus
