@@ -68,6 +68,10 @@ workloads:
   containers:
   - name: prometheus
     image: wodby/prometheus
+    resources:
+      request:
+        cpu: 20
+        memory: 48
     helm:
       resources: resources
       env: envVars
