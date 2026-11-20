@@ -10,6 +10,7 @@ labels:
 options:
 - version: '3.13'
   tag: 3.13-r2
+  digest: sha256:fb6949b873f7925e67509295a92239553b174f95469ab1a1faf5b8d908c4fae3
   default: true
   eol: '2027-07-31T00:00:00+00:00'
 endpoints:
